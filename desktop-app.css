@@ -1,0 +1,5 @@
+.desktop-app-bar{box-sizing:border-box;max-width:1120px;margin:20px auto 0;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;border:1px solid #dce3ed;border-left:4px solid #c7a34e;border-radius:12px;background:#fff;color:#153e68}
+.desktop-app-copy{display:grid;gap:4px}.desktop-app-copy strong{font-size:16px}.desktop-app-copy small{font-size:13px;color:#55677d}.desktop-app-actions{display:flex;gap:8px;flex-shrink:0}.desktop-app-actions button{white-space:nowrap}
+.desktop-app-help{max-width:480px;border:1px solid #dce3ed;border-radius:16px;padding:24px;color:#153e68;background:#fff}.desktop-app-help::backdrop{background:#122e51aa}.desktop-app-help h2{margin:0 0 12px}.desktop-app-help li{margin-bottom:10px}.desktop-app-help p{line-height:1.5}.desktop-app-help button{margin-top:10px}
+@media(max-width:760px){.desktop-app-bar{margin:16px 12px 0;align-items:flex-start;flex-direction:column}.desktop-app-actions{flex-wrap:wrap}}
+@media print{.desktop-app-bar,.desktop-app-help{display:none!important}}

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>KU Campus Passport · V4.0</title>
+  <link rel="stylesheet" href="style.css">
+<meta name="theme-color" content="#153e68"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="KUPlanner.ico"><link rel="stylesheet" href="desktop-app.css"><script defer src="desktop-app.js"></script></head>
+<body class="passport-page-body">
+  <header class="passport-page-header">
+    <div class="passport-page-brand">
+      <img src="khalifa-university-logo.png" alt="Khalifa University logo" width="486" height="144">
+      <div>
+        <span class="eyebrow">KU STUDY PLANNER · KU LIFE MODE</span>
+        <h1>KU Campus Passport</h1>
+        <p>Explore student life beyond the timetable, collect stamps, and complete a KU Life Passport.</p>
+      </div>
+    </div>
+    <a class="passport-back-link" href="index.html">← Back to planner</a>
+  </header>
+
+  <main class="passport-page-main">
+    <section id="passportWelcome" class="passport-welcome panel">
+      <div>
+        <span class="eyebrow">YOUR PERSONAL PASSPORT</span>
+        <h2>Who is this passport for?</h2>
+        <p>Enter the name you want printed on your completion certificate. It is saved only in this browser.</p>
+      </div>
+      <form id="passportNameForm" class="passport-name-form">
+        <label>Your name
+          <input id="passportNameInput" maxlength="60" autocomplete="name" placeholder="e.g. Your full name" required>
+        </label>
+        <button class="primary" type="submit">Create my passport</button>
+      </form>
+    </section>
+
+    <div id="passportExperience" hidden>
+      <section class="passport-identity-card">
+        <div class="passport-identity-main">
+          <div class="passport-emblem" aria-hidden="true">KU</div>
+          <div>
+            <span class="eyebrow">KU LIFE PASSPORT HOLDER</span>
+            <h2 id="passportHolderName"></h2>
+            <p>Complete all eight stamps in this passport to finish a cycle and earn one KU Life streak.</p>
+          </div>
+        </div>
+        <div class="passport-identity-actions">
+          <button id="passportChangeName" type="button">Change name</button>
+          <a href="index.html">Planner</a>
+        </div>
+      </section>
+
+      <section class="passport-stats" aria-label="KU Campus Passport statistics">
+        <div><small>CURRENT PASSPORT</small><strong id="passportCount">0 / 8 stamps</strong></div>
+        <div><small>KU LIFE STREAK</small><strong class="streak-value"><span aria-hidden="true">🔥</span> <span id="passportStreak">0</span></strong></div>
+        <div><small>LIFETIME POINTS</small><strong id="passportLifetimePoints">0</strong></div>
+        <div><small>PASSPORTS COMPLETED</small><strong id="passportCompletedCycles">0</strong></div>
+      </section>
+
+      <section class="panel passport-main-panel">
+        <div class="passport-head">
+          <div>
+            <span class="eyebrow">CURRENT KU LIFE PASSPORT</span>
+            <h2>Your eight campus-life stamps</h2>
+            <p>Each passport contains a different mix of KU-inspired social, cultural, wellness, recreation, and exploration activities.</p>
+          </div>
+          <div class="passport-score-single"><small>CURRENT POINTS</small><strong id="passportPoints">0</strong></div>
+        </div>
+
+        <div class="passport-progress-row">
+          <progress id="passportProgress" max="8" value="0" aria-label="KU Campus Passport progress"></progress>
+          <span id="passportProgressText">0 / 8</span>
+        </div>
+
+        <div class="passport-actions">
+          <button id="passportSpin" class="primary passport-spin" type="button">🎲 Spin for a KU Challenge</button>
+          <button id="passportShowAll" type="button">Show my stamp list</button>
+        </div>
+
+        <article id="passportChallenge" class="passport-challenge" hidden>
+          <div id="passportChallengeIcon" class="passport-challenge-icon" aria-hidden="true">🎯</div>
+          <div>
+            <span id="passportChallengeCategory" class="eyebrow"></span>
+            <h3 id="passportChallengeTitle"></h3>
+            <p id="passportChallengeText"></p>
+          </div>
+          <div class="passport-challenge-side">
+            <small id="passportChallengePoints"></small>
+            <button id="passportComplete" class="primary" type="button">I completed it</button>
+            <button id="passportSkip" class="passport-skip" type="button">Skip challenge (-10 pts)</button>
+          </div>
+        </article>
+        <p id="passportMessage" class="passport-message" role="status" aria-live="polite"></p>
+        <div id="passportStamps" class="passport-stamps passport-stamps-large" aria-label="Current KU Campus Passport stamps"></div>
+      </section>
+
+      <section class="panel passport-ku-inspiration">
+        <div>
+          <span class="eyebrow">INSPIRED BY REAL KU CAMPUS LIFE</span>
+          <h2>More variety every passport</h2>
+          <p>The challenge pool draws from KU student clubs, events, recreation spaces, sports facilities, wellbeing, culture, and social activities. Activities are phrased flexibly because club schedules and events can change.</p>
+        </div>
+        <div class="passport-source-links">
+          <a href="https://www.ku.ac.ae/student-life/campus-life" target="_blank" rel="noopener">KU Campus Life ↗</a>
+          <a href="https://www.ku.ac.ae/student-life/student-clubs-and-organizations" target="_blank" rel="noopener">KU Clubs & Associations ↗</a>
+          <a href="https://www.ku.ac.ae/student-life/student-events-programs-orientations" target="_blank" rel="noopener">KU Events & Programs ↗</a>
+          <a href="https://www.ku.ac.ae/campus-main" target="_blank" rel="noopener">KU Main Campus Facilities ↗</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="passportListDialog" class="passport-list-dialog">
+    <div class="dialogHead"><h2>Your current passport</h2><button id="passportListClose" type="button" aria-label="Close">✕</button></div>
+    <p>These are the eight stamps selected for this passport cycle.</p>
+    <div id="passportListItems" class="passport-list-items"></div>
+  </dialog>
+
+  <dialog id="passportCertificateDialog" class="passport-certificate-dialog">
+    <div class="dialogHead certificate-dialog-head"><h2>Passport completed!</h2><button id="passportCertificateClose" type="button" aria-label="Close">✕</button></div>
+    <div id="passportCertificate" class="passport-certificate">
+      <div class="certificate-topline">KU CAMPUS PASSPORT</div>
+      <div class="certificate-crest">KU</div>
+      <div class="certificate-kicker">CERTIFICATE OF CAMPUS EXPLORATION</div>
+      <h2 id="certificateName"></h2>
+      <p class="certificate-copy">has completed a full KU Life Passport by exploring activities beyond the classroom and collecting all eight campus-life stamps.</p>
+      <div id="certificateStampRow" class="certificate-stamp-row"></div>
+      <div class="certificate-meta">
+        <div><small>PASSPORT NO.</small><strong id="certificateNumber"></strong></div>
+        <div><small>KU LIFE STREAK</small><strong class="streak-value"><span aria-hidden="true">🔥</span> <span id="certificateStreak"></span></strong></div>
+        <div><small>COMPLETED</small><strong id="certificateDate"></strong></div>
+      </div>
+      <div class="certificate-footer">KU Study Planner · KU Life Mode</div>
+    </div>
+    <p class="certificate-note">Your stamps have reset automatically and your KU Life streak has increased by 1. A fresh passport is ready.</p>
+    <div class="actions certificate-actions">
+      <button id="passportPrintCertificate" class="primary" type="button">Print / Save Certificate</button>
+      <button id="passportContinue" type="button">Start new passport</button>
+    </div>
+  </dialog>
+
+  <script src="passport.js"></script>
+</body>
+</html>
