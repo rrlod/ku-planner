@@ -29,7 +29,7 @@ const ScheduleGrid=(()=>{
   const clock=y=>{const value=Math.round(((y-axis.intercept)/axis.slope)/5)*5;return value>=0&&value<1440?String(Math.floor(value/60)).padStart(2,'0')+':'+String(value%60).padStart(2,'0'):'';};
   for(const rect of (geometry?.cells||coloredCells(image))){if(rect.y0<=top)continue;const middle=(rect.x0+rect.x1)/2,dayWord=[...head].sort((a,b)=>Math.abs(cx(a)-middle)-Math.abs(cx(b)-middle))[0];const day=ScheduleParser.dayNames.findIndex(d=>d.slice(0,3).toLowerCase()===dayWord.text.slice(0,3).toLowerCase());if(day<0)continue;
    const inside=words.filter(w=>cx(w)>rect.x0&&cx(w)<rect.x1&&cy(w)>rect.y0&&cy(w)<rect.y1).sort((a,b)=>Math.abs(cy(a)-cy(b))<12?cx(a)-cx(b):cy(a)-cy(b));
-   const cellTitle=titles.find(item=>Math.abs(item.rect.x0-rect.x0)<3&&Math.abs(item.rect.y0-rect.y0)<3);const text=(cellTitle?cellTitle.text.trim():inside.map(w=>w.text).join(' ')).replace(/[✓✔✅]/g,'').replace(/^[^A-Za-z0-9]+/,'').replace(/^[JvV4]\s+(?=[A-Z][a-z])/,'').replace(/_/g,' ').replace(/^[\s_;:,|~]+/,'').replace(/\b[Il]{2,3}\b(?=\s*$)/,match=>'I'.repeat(match.length)).replace(/\s\|$/,' I').replace(/\s+/g,' ').trim();const explicit=ScheduleParser.range(text),title=explicit?text.replace(explicit.raw,'').trim():text,start=explicit?.start||clock(rect.y0),duration=Math.round((rect.y1-rect.y0)/axis.slope/5)*5,endMinute=start?Number(start.slice(0,2))*60+Number(start.slice(3))+duration:0,end=explicit?.end||(endMinute>0&&endMinute<1440?String(Math.floor(endMinute/60)).padStart(2,'0')+':'+String(endMinute%60).padStart(2,'0'):'');if(!start||!end||end<=start)continue;
+   const cellTitle=titles.find(item=>Math.abs(item.rect.x0-rect.x0)<3&&Math.abs(item.rect.y0-rect.y0)<3);const text=(cellTitle?cellTitle.text.trim():inside.map(w=>w.text).join(' ')).replace(/[✓✔✅]/g,'').replace(/\(?\s*(?:planned|registered|enrolled)\s*\)?/gi,' ').replace(/^[^A-Za-z0-9]+/,'').replace(/^[JvV4]\s+(?=[A-Z][a-z])/,'').replace(/_/g,' ').replace(/^[\s_;:,|~]+/,'').replace(/\b[Il]{2,3}\b(?=\s*$)/,match=>'I'.repeat(match.length)).replace(/\s\|$/,' I').replace(/\s+/g,' ').trim();const explicit=ScheduleParser.range(text),title=explicit?text.replace(explicit.raw,'').trim():text,start=explicit?.start||clock(rect.y0),duration=Math.round((rect.y1-rect.y0)/axis.slope/5)*5,endMinute=start?Number(start.slice(0,2))*60+Number(start.slice(3))+duration:0,end=explicit?.end||(endMinute>0&&endMinute<1440?String(Math.floor(endMinute/60)).padStart(2,'0')+':'+String(endMinute%60).padStart(2,'0'):'');if(!start||!end||end<=start)continue;
    entries.push({title:title.slice(0,100),preview:cellTitle?.preview||null,needsReview:!!cellTitle?.clipped||!title,day,type:/\blab(?:oratory)?\b/i.test(title)?'lab':'lecture',start,end,source:'color-grid',review:(cellTitle?.clipped?'Course name may be clipped or unclear. Check it against the original block above. ':!title?'Course name could not be read. Enter it below. ':'')+'Approximate times from the left axis and block edges, rounded to 5 minutes. Image compression can shift times. Confirm times and lecture/lab category.'});
   }// Repeated near-identical readings can repair a letter without changing course levels.
   const editDistance=(a,b)=>{let row=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){const next=[i];for(let j=1;j<=b.length;j++)next[j]=Math.min(next[j-1]+1,row[j]+1,row[j-1]+(a[i-1]===b[j-1]?0:1));row=next;}return row[b.length];};
@@ -68,6 +68,15 @@ const ScheduleGrid=(()=>{
   }const merged=[];for(const cell of out){const prev=merged.at(-1);if(prev&&prev.x0===cell.x0&&cell.y0-prev.y1<=Math.max(8,image.height*.04)&&!whiteGap(image,prev,cell)&&cell.color.every((v,i)=>Math.abs(v-prev.color[i])<40))prev.y1=cell.y1;else merged.push(cell);}return merged;
  }
 
- return {parse,coloredCells,getAxis,headers,detectLayout,tableCells};
+ function inferHeaders(image,layout,words,firstDay){
+  if(!layout||!Number.isInteger(firstDay)||firstDay<0||firstDay>6)return[];
+  let boundaries=[...layout.boundaries];
+  const axis=words.filter(w=>w.bbox.x0<image.width*.2&&/^(?:\d{1,2}(?::[0-5]\d)?\s*[ap]m|[ap]m)$/i.test(w.text.replace(/\./g,'')));
+  const axisRight=axis.length?Math.max(...axis.map(w=>w.bbox.x1)):0;
+  if(axisRight)boundaries=boundaries.filter(x=>x>axisRight);
+  else if(boundaries.length>3){const gaps=boundaries.slice(1).map((x,i)=>x-boundaries[i]);if(gaps[0]<median(gaps)*.8)boundaries.shift();}
+  return boundaries.slice(0,-1).slice(0,7).map((x,i)=>({text:ScheduleParser.dayNames[(firstDay+i)%7],bbox:{x0:x,x1:boundaries[i+1],y0:layout.top,y1:layout.headerBottom},inferred:true}));
+ }
+ return {parse,coloredCells,getAxis,headers,detectLayout,tableCells,inferHeaders};
 })();
 if(typeof module!=='undefined')module.exports=ScheduleGrid;

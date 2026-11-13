@@ -1,14 +1,11 @@
-# KU Planner V4.0
+# KuPlannerV5.0
 
-Free study planner and KU Campus Passport.
+[Download or use KuPlannerV5.0](https://rrlod.github.io/ku-planner/download.html)
 
-[Install or download KU Planner](https://rrlod.github.io/ku-planner/install.html)
+Free study planner and KU Campus Passport. No account or installation required.
 
-- Weekly planning, assignments, study goals and timetable photo import
-- Campus Passport challenges, points, stamps and certificates
-- White, blue and gold app icon
-- Install as a desktop app through Edge or Chrome
-- Works offline after setup; photo recognition requires internet
-- No account required; saved plans stay on your device
+Download KuPlannerV5.0.zip, extract it, and open OPEN KuPlannerV5.0.html.
+Or choose Use in browser on the download page.
 
-For the offline download, extract KUplannerV4.0_Offline.zip and open OPEN KU PLANNER.html.
+Includes weekly planning, tasks, study suggestions, academic calendar, timetable screenshot reading and Campus Passport.
+Your plans stay in your browser on your device. The downloaded edition includes the screenshot reader and works offline.

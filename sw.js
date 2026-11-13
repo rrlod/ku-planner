@@ -1,17 +1,19 @@
-/* KU Planner V4.0: cache only the app's public, static files, never sign-in routes. */
-const CACHE = 'ku-planner-v4-20261112-2';
+/* KuPlannerV5.0: offline planner and Passport. */
+const CACHE = 'ku-planner-v5-20261112-1';
 const ASSETS = [
-  '/', '/index.html', '/install.html', '/install.css', '/manifest.webmanifest', '/desktop-app.js', '/desktop-app.css', '/KUPlanner.ico',
+  '/', '/index.html', '/install.html', '/download.html', '/download-v5.css', '/manifest.webmanifest', '/desktop-app-v5.js', '/desktop-app-v5.css', '/KUPlanner.ico',
   '/icon-192.png', '/icon-512.png', '/icon-maskable-512.png',
   '/KU%20Campus%20Passport.html', '/style.css',
   '/academic-calendar.js', '/app.js', '/banner.js',
-  '/feedback.js', '/passport.js', '/photo-import.js',
-  '/planning.js', '/schedule-grid.js', '/schedule-parser.js',
+  '/feedback.js', '/passport.js', '/photo-import-v5.js',
+  '/planning.js', '/schedule-grid-v5.js', '/schedule-parser-v5.js',
   '/khalifa-university-logo.png',
   '/academic-calendar-2026-2027.pdf'
 ];
 const appRoot = new URL('.', self.location.href);
 const urls = new Set(ASSETS.map(p => new URL(p.slice(1) || '.', appRoot).href));
+// Cache the larger reader files only after they are requested.
+for (const name of ['tesseract.min.js','tesseract-worker.min.js','tesseract-core-lstm.wasm.js','eng.traineddata']) urls.add(new URL(name,appRoot).href);
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
@@ -32,7 +34,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     for (const key of await caches.keys()) {
-      if (key.startsWith('ku-planner-v4-') && key !== CACHE) await caches.delete(key);
+      if (key.startsWith('ku-planner-') && key !== CACHE) await caches.delete(key);
     }
     await self.clients.claim();
   })());
@@ -55,6 +57,10 @@ self.addEventListener('fetch', event => {
       } catch {}
       return (await cache.match(url.href)) || Response.error();
     }
-    return (await cache.match(url.href)) || fetch(request);
+    const saved = await cache.match(url.href);
+    if (saved) return saved;
+    const fresh = await fetch(request);
+    if (fresh.ok && !fresh.redirected && fresh.type !== 'opaque') await cache.put(url.href,fresh.clone());
+    return fresh;
   })());
 });
