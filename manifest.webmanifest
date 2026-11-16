@@ -1,7 +1,7 @@
 {
   "id": "./ku-planner",
-  "name": "KuPlannerV6.0",
-  "short_name": "KuPlannerV6.0",
+  "name": "KuPlannerV6.1",
+  "short_name": "KuPlannerV6.1",
   "description": "Your KU study planner and Campus Passport, in your browser.",
   "start_url": "./index.html",
   "scope": "./",

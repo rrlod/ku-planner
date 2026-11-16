@@ -1,13 +1,13 @@
-/* KuPlannerV6.0: offline planner and Passport. */
-const CACHE = 'ku-planner-v6-20261116-1';
+/* KuPlannerV6.1: offline planner and Passport. */
+const CACHE = 'ku-planner-v61-20261116-1';
 const ASSETS = [
-  '/', '/index.html', '/install.html', '/download.html', '/download-v6.css', '/manifest.webmanifest', '/desktop-app-v6.js', '/desktop-app-v6.css', '/KUPlanner.ico',
+  '/', '/index.html', '/install.html', '/download.html', '/download-v61.css', '/manifest.webmanifest', '/desktop-app-v61.js', '/desktop-app-v61.css', '/KUPlanner.ico',
   '/icon-192.png', '/icon-512.png', '/icon-maskable-512.png',
   '/KU%20Campus%20Passport.html', '/style.css',
-  '/academic-calendar.js', '/app.js', '/banner.js',
+  '/academic-calendar.js', '/app-v61.js', '/banner.js',
   '/feedback.js', '/passport.js', '/photo-import-v5.js',
   '/planning.js', '/schedule-grid-v5.js', '/schedule-parser-v5.js',
-  '/khalifa-university-logo.png', '/leaderboard.html', '/features-v6.css', '/syllabus-v6.js', '/syllabus-parser-v6.js',
+  '/khalifa-university-logo.png', '/leaderboard.html', '/features-v6.css', '/syllabus-v61.js', '/week-model-v61.js', '/week-features-v61.js', '/week-features-v61.css', '/syllabus-parser-v6.js',
   '/academic-calendar-2026-2027.pdf'
 ];
 const appRoot = new URL('.', self.location.href);
@@ -39,6 +39,7 @@ self.addEventListener('activate', event => {
     await self.clients.claim();
   })());
 });
+self.addEventListener('notificationclick',event=>{event.notification.close();const url=new URL('index.html',appRoot).href;event.waitUntil((async()=>{const pages=await self.clients.matchAll({type:'window',includeUncontrolled:true});const page=pages.find(p=>p.url.startsWith(appRoot.href));if(page)return page.focus();return self.clients.openWindow(url);})());});
 self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET') return;
