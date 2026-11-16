@@ -1,19 +1,19 @@
-/* KuPlannerV5.0: offline planner and Passport. */
-const CACHE = 'ku-planner-v5-20261112-1';
+/* KuPlannerV6.0: offline planner and Passport. */
+const CACHE = 'ku-planner-v6-20261116-1';
 const ASSETS = [
-  '/', '/index.html', '/install.html', '/download.html', '/download-v5.css', '/manifest.webmanifest', '/desktop-app-v5.js', '/desktop-app-v5.css', '/KUPlanner.ico',
+  '/', '/index.html', '/install.html', '/download.html', '/download-v6.css', '/manifest.webmanifest', '/desktop-app-v6.js', '/desktop-app-v6.css', '/KUPlanner.ico',
   '/icon-192.png', '/icon-512.png', '/icon-maskable-512.png',
   '/KU%20Campus%20Passport.html', '/style.css',
   '/academic-calendar.js', '/app.js', '/banner.js',
   '/feedback.js', '/passport.js', '/photo-import-v5.js',
   '/planning.js', '/schedule-grid-v5.js', '/schedule-parser-v5.js',
-  '/khalifa-university-logo.png',
+  '/khalifa-university-logo.png', '/leaderboard.html', '/features-v6.css', '/syllabus-v6.js', '/syllabus-parser-v6.js',
   '/academic-calendar-2026-2027.pdf'
 ];
 const appRoot = new URL('.', self.location.href);
 const urls = new Set(ASSETS.map(p => new URL(p.slice(1) || '.', appRoot).href));
 // Cache the larger reader files only after they are requested.
-for (const name of ['tesseract.min.js','tesseract-worker.min.js','tesseract-core-lstm.wasm.js','eng.traineddata']) urls.add(new URL(name,appRoot).href);
+for (const name of ['tesseract.min.js','tesseract-worker.min.js','tesseract-core-lstm.wasm.js','eng.traineddata','syllabus-pdf-v6.js','syllabus-worker-v6.js','syllabus-zip-v6.js']) urls.add(new URL(name,appRoot).href);
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
