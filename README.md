@@ -1,12 +1,11 @@
-# KuPlannerV6.1
+# KuPlannerV7.0
 
-A browser-based KU study planner with Campus Passport. Open index.html or download KuPlannerV6.1.zip from download.html. No account required.
+KU Planner with the improved sidebar interface, local Open Sans fonts, and a blue, white and gold theme inspired by V6.1. Open index.html or download KuPlannerV7.0.zip through download.html. No account required.
 
-V6 adds a link to KU Library study-room bookings, a clearly labeled sample Life Points leaderboard, and local PDF/DOCX/TXT syllabus assessment suggestions. Students approve each item and enter its date and time before it is added. Assessment detection is a review aid and can miss items.
+Features include weekly classes/labs/tasks, study goals and suggestions, timetable image reading, PDF/DOCX/TXT syllabus suggestions with review-later support, weekly assignment priorities, local study reminders, KU Campus Passport, official study-room bookings, and a sample leaderboard.
 
-All plans, Passport points and document reading stay on the device. No uploaded syllabuses are included in this repository. PDF.js (Apache-2.0) and JSZip (MIT) are bundled for local reading; see their license files. Timetable image reading and the academic calendar are preserved.
+Students review imported results before adding them. Syllabus assessments require confirmed dates and times. Reminders need an open planner; optional browser alerts request permission only after an explicit click. The leaderboard uses fictional sample rankings.
 
-Published as a static GitHub Pages site from the repository root. Keep relative paths and stable browser storage keys when updating.
+Saved plans and Passport storage keys are preserved from V6.1. Your data and document reading stay on your device. The website updates its offline files; the portable ZIP includes all local readers and fonts. No private syllabus or timetable examples are included in this repository.
 
-
-V6.1 adds weekly assignment priorities, persistent review-later syllabus suggestions with user-confirmed teaching-week mapping, and local study reminders. Reminders require an open planner; browser alerts are optional and never request permission automatically. Pending assessments, priorities and preferences are included in plan exports.
+Bundled PDF.js, JSZip, OCR and font licenses are included alongside the relevant assets. Published as a static GitHub Pages site from the repository root.

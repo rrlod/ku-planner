@@ -1,13 +1,13 @@
-/* KuPlannerV6.1: offline planner and Passport. */
-const CACHE = 'ku-planner-v61-20261116-1';
+/* KuPlannerV7.0: offline planner and Passport. */
+const CACHE = 'ku-planner-v7-20261125-2';
 const ASSETS = [
-  '/', '/index.html', '/install.html', '/download.html', '/download-v61.css', '/manifest.webmanifest', '/desktop-app-v61.js', '/desktop-app-v61.css', '/KUPlanner.ico',
+  '/', '/index.html', '/install.html', '/download.html', '/download-v7.css', '/manifest.webmanifest', '/app-runtime-v7.js', '/ui-v7.css', '/ui-v7.js', '/OpenSans-Regular.ttf', '/OpenSans-Semibold.ttf', '/OpenSans-Bold.ttf', '/KUPlanner.ico',
   '/icon-192.png', '/icon-512.png', '/icon-maskable-512.png',
   '/KU%20Campus%20Passport.html', '/style.css',
-  '/academic-calendar.js', '/app-v61.js', '/banner.js',
-  '/feedback.js', '/passport.js', '/photo-import-v5.js',
+  '/academic-calendar.js', '/app-v7.js', '/banner.js',
+  '/feedback.js', '/passport-v7.js', '/photo-import-v5.js',
   '/planning.js', '/schedule-grid-v5.js', '/schedule-parser-v5.js',
-  '/khalifa-university-logo.png', '/leaderboard.html', '/features-v6.css', '/syllabus-v61.js', '/week-model-v61.js', '/week-features-v61.js', '/week-features-v61.css', '/syllabus-parser-v6.js',
+  '/khalifa-university-logo.png', '/leaderboard.html', '/features-v6.css', '/syllabus-v7.js', '/week-model-v61.js', '/week-features-v61.js', '/week-features-v61.css', '/syllabus-parser-v7.js',
   '/academic-calendar-2026-2027.pdf'
 ];
 const appRoot = new URL('.', self.location.href);
